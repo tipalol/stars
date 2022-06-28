@@ -12,7 +12,7 @@ public class Trader : ITrader
 
     public Trader()
     {
-        
+        Storage = new Storage<TradingItem>(new List<TradingItem>());
     }
 
     public Trader(IStorage<TradingItem> storage, int money)

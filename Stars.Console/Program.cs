@@ -1,6 +1,7 @@
 ﻿using Stars.Console.Extensions;
 using Stars.Console.Utils;
 using Stars.Core;
+using Stars.Core.Locations;
 using Stars.Storage;
 
 var world = WorldBuilder.Build();
@@ -17,7 +18,7 @@ var player = new PlayerBuilder()
 
 Input.Print($"Hi, {player.Name}! You have {player.Balance} credits.");
 Input.Print($"You have {player.Storage.GetAll().Count} items");
-Input.Print($"First of them is {player.Storage.GetAll().First(i => i.Id == 0).Name}");
+Input.Print($"First of them is {player.Storage.GetAll().First().Name}");
 
 var choose = -1;
 
@@ -68,7 +69,7 @@ while (choose != 0)
             var resources = player.Storage.GetAll();
 
             foreach (var resource in resources)
-                Input.Print($"{resource.Id} - {resource.Amount} т.");
+                Input.Print($"{resource.Name} - {resource.Amount} т.");
             
             if (resources.Count == 0)
                 Input.Print("Отсек пуст, капитан!");
@@ -82,7 +83,7 @@ ICollection<GameItem> GetStartItems()
 {
     return new List<GameItem>()
     {
-        new GameItem(0, "Ore", 10, 3, ItemType.Ore)
+        Mine.GenerateResource()
     };
 }
 
