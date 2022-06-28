@@ -76,13 +76,13 @@ public static class WorldBuilder
 
         if (locationType < 7)
         {
-            return new Mine(Guid.NewGuid(), "Шахта", new TradingItem(0, "Руда", 100, 3));
+            return new Mine(Guid.NewGuid(), "Шахта", Mine.GenerateResource());
         }
         else
         {
             var trader = new Trader(new Storage<TradingItem>(new List<TradingItem>
             {
-                new TradingItem(0, "Руда", 50, 3)
+                Mine.GenerateResource()
             }), 1000);
             
             return new Station(Guid.NewGuid(), "Станция", trader);

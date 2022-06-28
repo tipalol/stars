@@ -1,13 +1,19 @@
-﻿using Stars.Storage.Abstractions;
+﻿using Stars.Storage;
+using Stars.Storage.Abstractions;
 using Stars.Trading.Abstractions;
 
 namespace Stars.Trading;
 
 public class Trader : ITrader
 {
-    public int Balance { get; private set; }
+    public int Balance { get; protected set; }
 
-    public IStorage<TradingItem> Storage { get; }
+    public IStorage<TradingItem> Storage { get; init; }
+
+    public Trader()
+    {
+        Storage = new Storage<TradingItem>(new List<TradingItem>());
+    }
 
     public Trader(IStorage<TradingItem> storage, int money)
     {

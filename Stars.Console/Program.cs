@@ -1,22 +1,24 @@
 ﻿using Stars.Console.Extensions;
 using Stars.Console.Utils;
 using Stars.Core;
+using Stars.Core.Locations;
 using Stars.Storage;
-using Stars.Trading;
 
 var world = WorldBuilder.Build();
-
-world.StartingSector.PrintDetailedInfo();
-
-var storage = new Storage<TradingItem>(GetStartItems());
+var storage = new Storage<GameItem>(GetStartItems());
 
 var name = Input.Ask("What's your name?");
 
-var player = new Player(storage, 1000, name, world.StartingSector);
+var player = new PlayerBuilder()
+    .WithName(name)
+    .WithBalance(1000)
+    .InSector(world.StartingSector)
+    .HasStorage(storage)
+    .Build();
 
 Input.Print($"Hi, {player.Name}! You have {player.Balance} credits.");
 Input.Print($"You have {player.Storage.GetAll().Count} items");
-Input.Print($"First of them is {player.Storage.GetAll().First(i => i.Id == 0).Name}");
+Input.Print($"First of them is {player.Storage.GetAll().First().Name}");
 
 var choose = -1;
 
@@ -67,7 +69,7 @@ while (choose != 0)
             var resources = player.Storage.GetAll();
 
             foreach (var resource in resources)
-                Input.Print($"{resource.Id} - {resource.Amount} т.");
+                Input.Print($"{resource.Name} - {resource.Amount} т.");
             
             if (resources.Count == 0)
                 Input.Print("Отсек пуст, капитан!");
@@ -77,11 +79,11 @@ while (choose != 0)
 }
 
 
-ICollection<TradingItem> GetStartItems()
+ICollection<GameItem> GetStartItems()
 {
-    return new List<TradingItem>()
+    return new List<GameItem>()
     {
-        new TradingItem(0, "Ore", 10, 3)
+        Mine.GenerateResource()
     };
 }
 
