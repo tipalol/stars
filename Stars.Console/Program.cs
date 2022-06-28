@@ -2,17 +2,18 @@
 using Stars.Console.Utils;
 using Stars.Core;
 using Stars.Storage;
-using Stars.Trading;
 
 var world = WorldBuilder.Build();
-
-world.StartingSector.PrintDetailedInfo();
-
-var storage = new Storage<TradingItem>(GetStartItems());
+var storage = new Storage<GameItem>(GetStartItems());
 
 var name = Input.Ask("What's your name?");
 
-var player = new Player(storage, 1000, name, world.StartingSector);
+var player = new PlayerBuilder()
+    .WithName(name)
+    .WithBalance(1000)
+    .InSector(world.StartingSector)
+    .HasStorage(storage)
+    .Build();
 
 Input.Print($"Hi, {player.Name}! You have {player.Balance} credits.");
 Input.Print($"You have {player.Storage.GetAll().Count} items");
@@ -77,11 +78,11 @@ while (choose != 0)
 }
 
 
-ICollection<TradingItem> GetStartItems()
+ICollection<GameItem> GetStartItems()
 {
-    return new List<TradingItem>()
+    return new List<GameItem>()
     {
-        new TradingItem(0, "Ore", 10, 3)
+        new GameItem(0, "Ore", 10, 3, ItemType.Ore)
     };
 }
 

@@ -5,9 +5,9 @@ namespace Stars.Core.Locations;
 
 public class Mine : Location
 {
-    public TradingItem Resource { get; set; }
+    public GameItem Resource { get; set; }
     
-    public Mine(Guid id, string name, TradingItem resource) : base(id, name)
+    public Mine(Guid id, string name, GameItem resource) : base(id, name)
     {
         Resource = resource;
     }

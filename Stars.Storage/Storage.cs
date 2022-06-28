@@ -46,7 +46,7 @@ public class Storage<TItem> : IStorage<TItem> where TItem : Item
 
     public IReadOnlyList<TItem> GetAll()
     {
-        return _items.ToImmutableList();
+        return _items.OrderBy(x => x.Id).ToImmutableList();
     }
 
     private TItem InitEmpty(TItem item)

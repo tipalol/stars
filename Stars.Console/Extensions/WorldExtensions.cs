@@ -76,7 +76,7 @@ public static class WorldBuilder
 
         if (locationType < 7)
         {
-            return new Mine(Guid.NewGuid(), "Шахта", new TradingItem(0, "Руда", 100, 3));
+            return new Mine(Guid.NewGuid(), "Шахта", new GameItem(0, "Руда", 100, 3, ItemType.Ore));
         }
         else
         {
