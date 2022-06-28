@@ -30,7 +30,7 @@ public class Storage<TItem> : IStorage<TItem> where TItem : Item
         if (itemToTake is null)
             return;
 
-        _ = itemToTake.Amount >= item.Amount 
+        _ = itemToTake.Amount < item.Amount 
             ? throw new NotEnoughItemsException(item.Id) : itemToTake.Take(item.Amount);
     }
 
